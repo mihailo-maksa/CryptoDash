@@ -3,6 +3,7 @@ import ConfirmButton from './ConfirmButton';
 import { AppContext } from '../App/AppProvider';
 import Page from '../Shared/Page';
 import CoinGrid from './CoinGrid';
+import Search from './Search';
 
 export default function () {
   const { firstVisit } = useContext(AppContext);
@@ -17,7 +18,9 @@ export default function () {
           </h3>
         </div>
       )}
+      <CoinGrid topSection />
       <ConfirmButton />
+      <Search />
       <CoinGrid />
     </Page>
   );

@@ -26,13 +26,13 @@ function toProperCase(lower) {
 }
 
 function ControlButton({ name }) {
-  const { page, changePage } = useContext(AppContext);
+  const { page, setPage } = useContext(AppContext);
 
   return (
     // prettier-ignore
     <ControlButtonElem 
       active={page === name} 
-      onClick={() => changePage(name)}
+      onClick={() => setPage(name)}
     >
       {toProperCase(name)}
     </ControlButtonElem>
