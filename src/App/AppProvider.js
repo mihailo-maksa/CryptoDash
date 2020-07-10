@@ -21,7 +21,7 @@ export class AppProvider extends React.PureComponent {
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
       confirmFavorites: this.confirmFavorites,
-      setCurrentFavorite: this.setCurrentFavorites,
+      setCurrentFavorite: this.setCurrentFavorite,
       setFilteredCoins: this.setFilteredCoins,
       changeChartSelect: this.changeChartSelect,
     };
@@ -65,9 +65,43 @@ export class AppProvider extends React.PureComponent {
 
   /////////////////////////////////////
 
-  fetchHistorical = async () => {};
+  fetchHistorical = async () => {
+    if (this.state.firstVisit) return;
 
-  historical = () => {};
+    let results = await this.historical();
+
+    let historical = [
+      {
+        name: this.state.currentFavorite,
+        data: results.map((ticker, index) => [
+          moment()
+            .subtract({ [this.state.timeInterval]: TIME_UNITS - index })
+            .valueOf(),
+          ticker.USD,
+        ]),
+      },
+    ];
+
+    this.setState({ historical });
+  };
+
+  historical = () => {
+    let promises = [];
+
+    for (let units = TIME_UNITS; units > 0; units--) {
+      promises.push(
+        cc.priceHistorical(
+          this.state.currentFavorite,
+          ['USD'],
+          moment()
+            .subtract({ [this.state.timeInterval]: units })
+            .toDate()
+        )
+      );
+    }
+
+    return Promise.all(promises);
+  };
 
   /////////////////////////////////////
 
@@ -78,8 +112,8 @@ export class AppProvider extends React.PureComponent {
       return { page: 'settings', firstVisit: true };
     }
 
-    let { favorites } = cryptoDashData;
-    return { favorites };
+    let { favorites, currentFavorite } = cryptoDashData;
+    return { favorites, currentFavorite };
   };
 
   setPage = (page) => this.setState({ page });

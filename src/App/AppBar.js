@@ -14,10 +14,17 @@ const Bar = styled.div`
 
 const ControlButtonElem = styled.div`
   cursor: pointer;
+
   ${(props) =>
     props.active &&
     css`
       text-shadow: 0px 0px 60px #03ff03;
+    `}
+
+  ${(props) =>
+    props.active &&
+    css`
+      display: none;
     `}
 `;
 
@@ -26,13 +33,14 @@ function toProperCase(lower) {
 }
 
 function ControlButton({ name }) {
-  const { page, setPage } = useContext(AppContext);
+  const { page, setPage, firstVisit } = useContext(AppContext);
 
   return (
     // prettier-ignore
     <ControlButtonElem 
       active={page === name} 
       onClick={() => setPage(name)}
+      hidden={firstVisit && page === "dashboard"}
     >
       {toProperCase(name)}
     </ControlButtonElem>
