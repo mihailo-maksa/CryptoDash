@@ -63,8 +63,6 @@ export class AppProvider extends React.PureComponent {
     return returnData;
   };
 
-  /////////////////////////////////////
-
   fetchHistorical = async () => {
     if (this.state.firstVisit) return;
 
@@ -102,8 +100,6 @@ export class AppProvider extends React.PureComponent {
 
     return Promise.all(promises);
   };
-
-  /////////////////////////////////////
 
   savedSettings = () => {
     let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDashData'));

@@ -16,7 +16,7 @@ const ConfirmButtonStyled = styled.div`
   }
 `;
 
-const CenterDiv = styled.div`
+export const CenterDiv = styled.div`
   display: grid;
   justify-content: center;
 `;
